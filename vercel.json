@@ -1,15 +1,5 @@
 {
-  "version": 2,
-  "builds": [
-    { "src": "index.html", "use": "@vercel/static" },
-    { "src": "success.html", "use": "@vercel/static" },
-    { "src": "images/**", "use": "@vercel/static" },
-    { "src": "api/create-checkout-session.py", "use": "@vercel/python" }
-  ],
-  "routes": [
-    { "src": "/create-checkout-session", "dest": "/api/create-checkout-session.py" },
-    { "src": "/images/(.*)", "dest": "/images/$1" },
-    { "src": "/success.html", "dest": "/success.html" },
-    { "src": "/", "dest": "/index.html" }
+  "rewrites": [
+    { "source": "/create-checkout-session", "destination": "/api/create-checkout-session.py" }
   ]
 }
