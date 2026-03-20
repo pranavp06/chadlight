@@ -602,16 +602,17 @@
         <a href="STRIPE_PAYMENT_LINK" class="btn" id="buy-btn">Buy Now — $19.99</a>
       </div>
     </div>
-    <div class="hero-img-wrap">
-      <img src="images/result1.png" alt="Chad Light result — front" onerror="this.style.display='none';this.nextElementSibling.style.display='flex';" />
-      <div class="hero-img-placeholder" style="display:none;">
-        <span>📸</span>
-        <div>Drop result1.png in<br/>/chad-light/images/</div>
+    <div class="hero-img-wrap" style="display:grid;grid-template-columns:1fr 1fr;gap:16px;">
+      <div style="position:relative;border-radius:var(--radius);overflow:hidden;border:1px solid var(--border);">
+        <img src="images/result1.png" style="width:100%;height:100%;object-fit:cover;display:block;" alt="Result 1" />
       </div>
-      <div class="price-tag">
-        <div class="price-badge">Sale</div>
-        <div class="price-old">$34.99</div>
-        <div class="price-new">$19.99</div>
+      <div style="position:relative;border-radius:var(--radius);overflow:hidden;border:1px solid var(--border);">
+        <img src="images/result2.png" style="width:100%;height:100%;object-fit:cover;display:block;" alt="Result 2" />
+        <div class="price-tag">
+          <div class="price-badge">Sale</div>
+          <div class="price-old">$34.99</div>
+          <div class="price-new">$19.99</div>
+        </div>
       </div>
     </div>
   </section>
