@@ -599,7 +599,7 @@
       <h1>Ascend to Chad Lite<br/>with <em>Chad Light.</em></h1>
       <p>Our goal is simple — give you the best lighting so you can absolutely mog in your gym photos. No more bad angles, no more dark gyms. Just you, looking elite.</p>
       <div class="hero-actions">
-        <button class="btn" id="buy-btn" onclick="checkout()">Buy Now — $19.99</button>
+        <a href="STRIPE_PAYMENT_LINK" class="btn" id="buy-btn">Buy Now — $19.99</a>
         <a href="#features" class="btn btn-outline">See Features</a>
       </div>
     </div>
@@ -645,22 +645,5 @@
     </div>
   </footer>
 
-  <script>
-    async function checkout() {
-      const btn = document.getElementById('buy-btn');
-      btn.textContent = 'Loading...';
-      btn.disabled = true;
-      try {
-        const res = await fetch('/create-checkout-session', { method: 'POST' });
-        const data = await res.json();
-        if (data.url) window.location.href = data.url;
-        else throw new Error(data.error);
-      } catch (e) {
-        alert('Checkout error: ' + e.message);
-        btn.textContent = 'Buy Now — $19.99';
-        btn.disabled = false;
-      }
-    }
-  </script>
 </body>
 </html>
