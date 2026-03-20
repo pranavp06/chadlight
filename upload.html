@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Upload Images</title>
+  <style>
+    body { font-family: system-ui; background: #0d0d0d; color: #f0f0f0; display: flex; flex-direction: column; align-items: center; padding: 48px 24px; gap: 16px; }
+    h2 { color: #ffe135; margin-bottom: 8px; }
+    .section-label { color: #888; font-size: 12px; text-transform: uppercase; letter-spacing: 0.1em; margin-top: 16px; }
+    .drop-zone { border: 2px dashed #ffe135; border-radius: 16px; padding: 32px 60px; text-align: center; cursor: pointer; transition: background 0.2s; width: 360px; }
+    .drop-zone:hover, .drop-zone.dragover { background: rgba(255,225,53,0.08); }
+    .drop-zone p { color: #888; font-size: 13px; margin-top: 6px; }
+    .drop-zone h3 { color: #ffe135; margin-bottom: 6px; }
+    input[type=file] { display: none; }
+    .status { font-size: 13px; color: #ffe135; min-height: 20px; }
+  </style>
+</head>
+<body>
+  <h2>Chad Light — Image Upload</h2>
+
+  <div class="section-label">Product Photos</div>
+
+  <div class="drop-zone" id="zone1" onclick="document.getElementById('file1').click()">
+    <h3>product1.png</h3>
+    <p>3-config light photo<br/>Click or drag here</p>
+    <input type="file" id="file1" accept="image/*" onchange="upload(this, 'product1.png', 'status1')"/>
+  </div>
+  <div id="status1" class="status"></div>
+
+  <div class="drop-zone" id="zone2" onclick="document.getElementById('file2').click()">
+    <h3>product2.png</h3>
+    <p>Labeled diagram<br/>Click or drag here</p>
+    <input type="file" id="file2" accept="image/*" onchange="upload(this, 'product2.png', 'status2')"/>
+  </div>
+  <div id="status2" class="status"></div>
+
+  <div class="section-label">Gym Result Photos</div>
+
+  <div class="drop-zone" id="zone3" onclick="document.getElementById('file3').click()">
+    <h3>result1.png</h3>
+    <p>Front pose (guy with abs)<br/>Click or drag here</p>
+    <input type="file" id="file3" accept="image/*" onchange="upload(this, 'result1.png', 'status3')"/>
+  </div>
+  <div id="status3" class="status"></div>
+
+  <div class="drop-zone" id="zone4" onclick="document.getElementById('file4').click()">
+    <h3>result2.png</h3>
+    <p>Back pose<br/>Click or drag here</p>
+    <input type="file" id="file4" accept="image/*" onchange="upload(this, 'result2.png', 'status4')"/>
+  </div>
+  <div id="status4" class="status"></div>
+
+  <script>
+    function upload(input, name, statusId) {
+      const file = input.files[0];
+      if (!file) return;
+      const form = new FormData();
+      form.append('file', file, name);
+      fetch('/upload', { method: 'POST', body: form })
+        .then(r => r.text())
+        .then(msg => { document.getElementById(statusId).textContent = '✓ ' + msg; })
+        .catch(() => { document.getElementById(statusId).textContent = '✗ Upload failed'; });
+    }
+
+    [1,2,3,4].forEach(i => {
+      const zone = document.getElementById('zone' + i);
+      zone.addEventListener('dragover', e => { e.preventDefault(); zone.classList.add('dragover'); });
+      zone.addEventListener('dragleave', () => zone.classList.remove('dragover'));
+      zone.addEventListener('drop', e => {
+        e.preventDefault();
+        zone.classList.remove('dragover');
+        const input = document.getElementById('file' + i);
+        const dt = new DataTransfer();
+        dt.items.add(e.dataTransfer.files[0]);
+        input.files = dt.files;
+        input.dispatchEvent(new Event('change'));
+      });
+    });
+  </script>
+</body>
+</html>
